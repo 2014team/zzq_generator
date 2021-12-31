@@ -24,6 +24,7 @@ public class Start {
 			DataBaseUtil.jdbc_password = "****";
 			
 			
+			
 			//sqlserver
 //			DataBaseUtil.jdbc_driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 //			DataBaseUtil.jdbc_url = "jdbc:sqlserver://188.188.5.27:1433;DatabaseName=doctorjob";
