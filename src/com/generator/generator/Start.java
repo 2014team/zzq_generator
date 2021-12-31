@@ -23,8 +23,6 @@ public class Start {
 			DataBaseUtil.jdbc_user = "zhuzq";
 			DataBaseUtil.jdbc_password = "****";
 			
-			
-			
 			//sqlserver
 //			DataBaseUtil.jdbc_driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 //			DataBaseUtil.jdbc_url = "jdbc:sqlserver://188.188.5.27:1433;DatabaseName=doctorjob";
@@ -33,10 +31,8 @@ public class Start {
 //			paramMap.put("basePackageName","com.job36.mobile");//baseController,baseService等包名路径
 //			
 			DataBaseUtil.init();//初始化数据库连接
-			
 			//开始生成代码
 			GeneratorCode generator = GeneratorFactory.getGenerator();
-			
 			//实体基础包名
 			//如com.job528.personal.domain.MyUsers 的基础包名为com.job528.personal
 			paramMap.put("jspPrefix","admin");
