@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.dao.ParameterConfigDao">
+	
+	<!-- resultMap -->
+	<resultMap type="com.generator.domain.entity.ParameterConfig" id="resultMap">
+		<result property="id" column="id" />
+		<result property="paramKey" column="param_key" />
+		<result property="paramValue" column="param_value" />
+		<result property="remarks" column="remarks" />
+		<result property="orderId" column="orderId" />
+		<result property="projectConfigId" column="projectConfigId" />
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
+		<result property="status" column="status" />
+	</resultMap>
+
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.generator.domain.entity.ParameterConfig" useGeneratedKeys="true" keyProperty="id">
+		insert into t_parameter_config (
+			param_key
+			,param_value
+			,remarks
+			,orderId
+			,projectConfigId
+			,create_date
+			,update_date
+			,status
+		)
+		 values
+		 (
+			#{paramKey}
+			,#{paramValue}
+			,#{remarks}
+			,#{orderId}
+			,#{projectConfigId}
+			,now()
+			,now()
+			,status
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="Integer">
+		delete from t_parameter_config where id = #{id};
+	</delete>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteByBatch"  parameterType="java.util.List">
+		delete from
+		t_parameter_config
+		where id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<!-- 修改-->
+	<update id="update" parameterType="com.generator.domain.entity.ParameterConfig" >
+		update t_parameter_config 
+			set update_Date = now()
+				,param_key = #{paramKey}
+				,param_value = #{paramValue}
+				,remarks = #{remarks}
+				,orderId = #{orderId}
+				,projectConfigId = #{projectConfigId}
+				,status = #{status}
+		where id = #{id}
+	</update>
+	
+	<!-- 根据id获取对象-->
+ 	<select id="get" parameterType="Integer" resultMap="resultMap">
+ 		select 
+				id
+				,param_key
+				,param_value
+				,remarks
+				,orderId
+				,create_date
+				,update_date
+				,projectConfigId
+				,status
+		 from t_parameter_config where id = #{id} 
+		 order by orderId ,create_date desc limit 1;
+ 	</select>
+ 	
+ 	<!-- 通过Map单个查找-->
+	<select id="getOneByMap" parameterType="Map" resultMap="resultMap">
+		select 
+				id
+				,param_key
+				,param_value
+				,remarks
+				,orderId
+				,projectConfigId
+				,create_date
+				,update_date
+				,status
+		 from
+		t_parameter_config
+		<where>
+ 			<if test="null != paramKey and ''!= paramKey">
+			param_key = #{paramKey}
+			</if>
+			<if test="null != paramValue and ''!= paramValue">
+			and param_value = #{paramValue}
+			</if> 
+			<if test="null != remarks and ''!= remarks">
+			and remarks = #{remarks}
+			</if> 
+			<if test="null != createDate and ''!= createDate">
+			and create_date = #{createDate}
+			</if> 
+			<if test="null != updateDate and ''!= updateDate">
+			and update_date = #{updateDate}
+			</if> 
+			<if test="null != projectConfigId and ''!= projectConfigId">
+			and projectConfigId = #{projectConfigId}
+			</if> 
+			<if test="null != status">
+			and status = #{status}
+			</if> 
+		</where>
+		order by orderId ,create_date desc limit 1;
+	</select>
+	
+	<!-- 列表查询 -->
+	<select id="select" parameterType="Map" resultMap="resultMap">
+ 		select 
+				id
+				,param_key
+				,param_value
+				,orderId
+				,remarks
+				,create_date
+				,update_date
+				,projectConfigId
+				,status
+ 		 from t_parameter_config
+ 		<where>
+ 			<if test="null != paramKey and ''!= paramKey">
+			param_key = #{paramKey}
+			</if>
+			<if test="null != paramValue and ''!= paramValue">
+			and param_value = #{paramValue}
+			</if> 
+			<if test="null != remarks and ''!= remarks">
+			and remarks = #{remarks}
+			</if> 
+			<if test="null != createDate and ''!= createDate">
+			and create_date = #{createDate}
+			</if> 
+			<if test="null != updateDate and ''!= updateDate">
+			and update_date = #{updateDate}
+			</if> 
+			<if test="null != projectConfigId and ''!= projectConfigId">
+			and projectConfigId = #{projectConfigId}
+			</if> 
+			<if test="null != status">
+			and status = #{status}
+			</if> 
+ 		</where>
+ 		order by orderId ,create_date desc;
+ 	</select>
+ 	
+ 	<!-- 分页查找 -->
+	<select id="findByPage" parameterType="Map" resultMap="resultMap">
+		select 
+				id
+				,param_key
+				,param_value
+				,remarks
+				,orderId
+				,create_date
+				,update_date
+				,projectConfigId
+				,status
+ 		 from t_parameter_config
+ 		<where>
+ 			<if test="null != parameterConfigVo.id ">
+			id = #{parameterConfigVo.id} 
+			</if>	
+			<if test="null != parameterConfigVo.paramKey and ''!= parameterConfigVo.paramKey">
+			and param_key = #{parameterConfigVo.paramKey}
+			</if> 
+			<if test="null != parameterConfigVo.paramValue and ''!= parameterConfigVo.paramValue">
+			and param_value = #{parameterConfigVo.paramValue}
+			</if> 
+			<if test="null != parameterConfigVo.remarks and ''!= parameterConfigVo.remarks">
+			and remarks = #{parameterConfigVo.remarks}
+			</if> 
+			<if test="null != parameterConfigVo.createDate and ''!= parameterConfigVo.createDate">
+			and create_date = #{parameterConfigVo.createDate}
+			</if> 
+			<if test="null != parameterConfigVo.updateDate and ''!= parameterConfigVo.updateDate">
+			and update_date = #{parameterConfigVo.updateDate}
+			</if> 
+			<if test="null != parameterConfigVo.projectConfigId and ''!= parameterConfigVo.projectConfigId">
+			and projectConfigId = #{parameterConfigVo.projectConfigId}
+			</if> 
+			<if test="null != parameterConfigVo.status">
+			and status = #{parameterConfigVo.status}
+			</if> 
+ 		</where>
+ 		order by orderId ,create_date desc   
+ 		<if test="null != page and '' != page and null != page.begin and null !=page.limit ">
+ 		 limit ${page.begin} , ${page.limit};
+ 		 </if>
+	</select>
+	
+	<!-- 分页查找数量 -->
+	<select id="findByPageCount" parameterType="Map" resultType="Integer">
+		select count(1)  from t_parameter_config
+ 		<where>
+ 			<if test="null != parameterConfigVo.id ">
+			id = #{parameterConfigVo.id} 
+			</if>	
+			<if test="null != parameterConfigVo.paramKey and ''!= parameterConfigVo.paramKey">
+			and param_key = #{parameterConfigVo.paramKey}
+			</if> 
+			<if test="null != parameterConfigVo.paramValue and ''!= parameterConfigVo.paramValue">
+			and param_value = #{parameterConfigVo.paramValue}
+			</if> 
+			<if test="null != parameterConfigVo.remarks and ''!= parameterConfigVo.remarks">
+			and remarks = #{parameterConfigVo.remarks}
+			</if> 
+			<if test="null != parameterConfigVo.createDate and ''!= parameterConfigVo.createDate">
+			and create_date = #{parameterConfigVo.createDate}
+			</if> 
+			<if test="null != parameterConfigVo.updateDate and ''!= parameterConfigVo.updateDate">
+			and update_date = #{parameterConfigVo.updateDate}
+			</if> 
+			<if test="null != parameterConfigVo.projectConfigId and ''!= parameterConfigVo.projectConfigId">
+			and projectConfigId = #{parameterConfigVo.projectConfigId}
+			</if> 
+			<if test="null != parameterConfigVo.status">
+			and status = #{parameterConfigVo.status}
+			</if> 
+ 		</where>
+ 		order by orderId ,create_date desc ;
+	</select>
+	
+	
+	<select id="getBatchByMap" parameterType="Map" resultMap="resultMap">
+			select * 
+			from t_parameter_config
+		   where id in
+			<foreach collection="list" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+			order by id 
+	</select>
+	
+</mapper>

@@ -1,0 +1,8 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<#list listItem as item >
+		<li><span class="news_List_Ymd">
+        <font size="3"> ${item.getCreateDateStr()?default('')}</font>
+	    </span><br><span class="news_List_Title">
+	        <font size="3"><a href="/news/detail/${item.getNewsId()?default('')}">【${item.getTypeName()?default('')}】 ${item.getTitle()?default('')}</a> </font>
+	    </span></li> 
+</#list>

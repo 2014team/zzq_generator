@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.dao.TemplateConfigDao">
+	
+	<!-- resultMap -->
+	<resultMap type="com.generator.domain.entity.TemplateConfig" id="resultMap">
+		<result property="id" column="id" />
+		<result property="templateName" column="template_name" />
+		<result property="templateContent" column="template_content" />
+		<result property="buildPath" column="build_path" />
+		<result property="remarks" column="remarks" />
+		<result property="orderId" column="orderId" />
+		<result property="status" column="status" />
+		<result property="projectConfigId" column="projectConfigId" />
+		<result property="suffix" column="suffix" />
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
+	</resultMap>
+
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.generator.domain.entity.TemplateConfig" useGeneratedKeys="true" keyProperty="id">
+		insert into t_template_config (
+			template_name
+			,template_content
+			,build_path
+			,remarks
+			,orderId
+			,projectConfigId
+			,status
+			,suffix
+			,create_date
+			,update_date
+		)
+		 values
+		 (
+			#{templateName}
+			,#{templateContent}
+			,#{buildPath}
+			,#{remarks}
+			,#{orderId}
+			,#{projectConfigId}
+			,#{status}
+			,#{suffix}
+			,now()
+			,now()
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="Integer">
+		delete from t_template_config where id = #{id};
+	</delete>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteByBatch"  parameterType="java.util.List">
+		delete from
+		t_template_config
+		where id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<!-- 修改-->
+	<update id="update" parameterType="com.generator.domain.entity.TemplateConfig" >
+		update t_template_config 
+			set update_Date = now()
+				,template_name = #{templateName}
+				,template_content = #{templateContent}
+				,build_path = #{buildPath}
+				,remarks = #{remarks}
+				,orderId = #{orderId}
+				,projectConfigId = #{projectConfigId}
+				,status = #{status}
+				,suffix = #{suffix}
+		where id = #{id}
+	</update>
+	
+	<!-- 根据id获取对象-->
+ 	<select id="get" parameterType="Integer" resultMap="resultMap">
+ 		select 
+				id
+				,template_name
+				,template_content
+				,build_path
+				,remarks
+				,orderId
+				,create_date
+				,update_date
+				,projectConfigId
+				,status
+				,suffix
+		 from t_template_config where id = #{id} 
+		 order by orderId ,create_date desc limit 1;
+ 	</select>
+ 	
+ 	<!-- 通过Map单个查找-->
+	<select id="getOneByMap" parameterType="Map" resultMap="resultMap">
+		select 
+				id
+				,template_name
+				,template_content
+				,build_path
+				,remarks
+				,orderId
+				,create_date
+				,update_date
+				,projectConfigId
+				,status
+				,suffix
+		 from
+		t_template_config
+		<where>
+ 			<if test="null != templateName and ''!= templateName">
+			template_name = #{templateName}
+			</if>
+			<if test="null != templateContent and ''!= templateContent">
+			and template_content = #{templateContent}
+			</if> 
+			<if test="null != buildPath and ''!= buildPath">
+			and build_path = #{buildPath}
+			</if> 
+			<if test="null != remarks and ''!= remarks">
+			and remarks = #{remarks}
+			</if> 
+			<if test="null != createDate and ''!= createDate">
+			and create_date = #{createDate}
+			</if> 
+			<if test="null != updateDate and ''!= updateDate">
+			and update_date = #{updateDate}
+			</if> 
+			<if test="null != projectConfigId and ''!= projectConfigId">
+			and projectConfigId = #{projectConfigId}
+			</if> 
+			<if test="null != status">
+			and status = #{status}
+			</if> 
+			<if test="null != suffix and '' != suffix">
+			and suffix = #{suffix}
+			</if> 
+		</where>
+		order by orderId ,create_date desc limit 1;
+	</select>
+	
+	<!-- 列表查询 -->
+	<select id="select" parameterType="Map" resultMap="resultMap">
+ 		select 
+				id
+				,template_name
+				,template_content
+				,build_path
+				,remarks
+				,orderId
+				,create_date
+				,update_date
+				,projectConfigId
+				,status
+				,suffix
+ 		 from t_template_config
+ 		<where>
+ 			<if test="null != templateName and ''!= templateName">
+			template_name = #{templateName}
+			</if>
+			<if test="null != templateContent and ''!= templateContent">
+			and template_content = #{templateContent}
+			</if> 
+			<if test="null != buildPath and ''!= buildPath">
+			and build_path = #{buildPath}
+			</if> 
+			<if test="null != remarks and ''!= remarks">
+			and remarks = #{remarks}
+			</if> 
+			<if test="null != createDate and ''!= createDate">
+			and create_date = #{createDate}
+			</if> 
+			<if test="null != updateDate and ''!= updateDate">
+			and update_date = #{updateDate}
+			</if> 
+			<if test="null != projectConfigId and ''!= projectConfigId">
+			and projectConfigId = #{projectConfigId}
+			</if> 
+			<if test="null != status ">
+			and status = #{status}
+			</if> 
+			<if test="null != suffix and '' != suffix">
+			and suffix = #{suffix}
+			</if> 
+ 		</where>
+ 		order by orderId ,create_date desc;
+ 	</select>
+ 	
+ 	<!-- 分页查找 -->
+	<select id="findByPage" parameterType="Map" resultMap="resultMap">
+		select 
+				id
+				,template_name
+				,template_content
+				,build_path
+				,remarks
+				,orderId
+				,create_date
+				,update_date
+				,projectConfigId
+				,status
+				,suffix
+ 		 from t_template_config
+ 		<where>
+ 			<if test="null != templateConfigVo.id ">
+			id = #{templateConfigVo.id} 
+			</if>	
+			<if test="null != templateConfigVo.templateName and ''!= templateConfigVo.templateName">
+			and template_name = #{templateConfigVo.templateName}
+			</if> 
+			<if test="null != templateConfigVo.templateContent and ''!= templateConfigVo.templateContent">
+			and template_content = #{templateConfigVo.templateContent}
+			</if> 
+			<if test="null != templateConfigVo.buildPath and ''!= templateConfigVo.buildPath">
+			and build_path = #{templateConfigVo.buildPath}
+			</if> 
+			<if test="null != templateConfigVo.remarks and ''!= templateConfigVo.remarks">
+			and remarks = #{templateConfigVo.remarks}
+			</if> 
+			<if test="null != templateConfigVo.createDate and ''!= templateConfigVo.createDate">
+			and create_date = #{templateConfigVo.createDate}
+			</if> 
+			<if test="null != templateConfigVo.updateDate and ''!= templateConfigVo.updateDate">
+			and update_date = #{templateConfigVo.updateDate}
+			</if> 
+			<if test="null != templateConfigVo.projectConfigId and ''!= templateConfigVo.projectConfigId">
+			and projectConfigId = #{templateConfigVo.projectConfigId}
+			</if> 
+			<if test="null != templateConfigVo.status">
+			and status = #{templateConfigVo.status}
+			</if> 
+			<if test="null != templateConfigVo.suffix">
+			and suffix = #{templateConfigVo.suffix}
+			</if> 
+ 		</where>
+ 		order by id ,create_date desc   
+ 		<if test="null != page and '' != page and null != page.begin and null !=page.limit ">
+ 		 limit ${page.begin} , ${page.limit};
+ 		 </if>
+	</select>
+	
+	<!-- 分页查找数量 -->
+	<select id="findByPageCount" parameterType="Map" resultType="Integer">
+		select count(1)  from t_template_config
+ 		<where>
+ 			<if test="null != templateConfigVo.id ">
+			id = #{templateConfigVo.id} 
+			</if>	
+			<if test="null != templateConfigVo.templateName and ''!= templateConfigVo.templateName">
+			and template_name = #{templateConfigVo.templateName}
+			</if> 
+			<if test="null != templateConfigVo.templateContent and ''!= templateConfigVo.templateContent">
+			and template_content = #{templateConfigVo.templateContent}
+			</if> 
+			<if test="null != templateConfigVo.buildPath and ''!= templateConfigVo.buildPath">
+			and build_path = #{templateConfigVo.buildPath}
+			</if> 
+			<if test="null != templateConfigVo.remarks and ''!= templateConfigVo.remarks">
+			and remarks = #{templateConfigVo.remarks}
+			</if> 
+			<if test="null != templateConfigVo.createDate and ''!= templateConfigVo.createDate">
+			and create_date = #{templateConfigVo.createDate}
+			</if> 
+			<if test="null != templateConfigVo.updateDate and ''!= templateConfigVo.updateDate">
+			and update_date = #{templateConfigVo.updateDate}
+			</if> 
+			<if test="null != templateConfigVo.projectConfigId and ''!= templateConfigVo.projectConfigId">
+			and projectConfigId = #{templateConfigVo.projectConfigId}
+			</if> 
+			<if test="null != templateConfigVo.status">
+			and status = #{templateConfigVo.status}
+			</if> 
+			<if test="null != templateConfigVo.suffix">
+			and suffix = #{templateConfigVo.suffix}
+			</if> 
+ 		</where>
+ 		order by orderId ,create_date desc ;
+	</select>
+	
+	<select id="getBatchByMap" parameterType="Map" resultMap="resultMap">
+			select *  
+			from t_template_config
+		   where id in
+			<foreach collection="list" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+			order by orderId 
+	</select>
+
+</mapper>

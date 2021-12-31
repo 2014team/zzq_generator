@@ -1,0 +1,18 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<#list listItem as item >
+<#if item.getCoverImage()?exists>
+	<div class="flex-item banner-anime">
+       <a href="/product/detail/${item.getProductId()?default('')}">
+           <div class="image">
+               <img src="${item.getCoverImage()?default('')}" alt="${item.getCoverImage()?default('')}">
+           </div>
+           <div class="contents-hover">
+               <div class="products_desc">
+                   <h4 class="radicon-page">${item.getTitle()?default('')}</h4>
+                   <p>${item.getDescribe()?default('')}</p>
+               </div>
+           </div>
+       </a>
+   </div>
+</#if>
+</#list>

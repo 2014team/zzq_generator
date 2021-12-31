@@ -1,0 +1,15 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<#list listItem as item >
+<div class="flex-item banner-anime">
+	<a href="/driver/detail/${item.getDriverId()?default('')}" target="_blank">
+		<div class="image">
+			<img src="${item.getCoverImage()?default('')}" alt="${item.getDriverName()?default('')}">
+		</div>
+		<div class="text">
+			<p>
+				${item.getContent()?default('')}
+			</p>
+		</div>
+	</a>
+</div>
+</#list>

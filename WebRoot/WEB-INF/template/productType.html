@@ -1,0 +1,4 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<#list listItem as item >
+	<li><a href="/product/type/${item.getProductTypeId()?default('')}"><b>${item.getTypeName()?default('')}</b></a></li>
+</#list>

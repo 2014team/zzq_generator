@@ -1,0 +1,6 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<#list listItem as item >
+<#if item.getImageUrl()?exists>
+	<div class="swiper-slide"><a target=_blank href="${item.getJumpUrl()?default('')}"><img src="${item.getImageUrl()?default('')}" alt="${item.getImageUrl()?default('')}"></a></div>
+</#if>
+</#list>
